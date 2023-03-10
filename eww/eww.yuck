@@ -1,0 +1,66 @@
+(defwindow bar0
+  :monitor 0
+  :geometry (geometry :x "0%"
+    :y "0px"
+    :width "100%"
+    :height "15px"
+  :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  :exclusive true
+  :wm-ignore false
+  (bar)
+)
+
+(defwidget bar []
+  (box :class "eww_bar"
+    :orientation "h"
+    :vexpand "false"
+    :hexpand "false"
+    (leftSide)
+    (rightSide)
+  )
+)
+(defwidget time []
+  (label :text "${time}")
+)
+
+(defwidget volume []
+  (label  :text "${volume}")
+)
+
+(defwidget wifi []
+  (box  
+    :orientation "h"
+    (button :onclick "scripts/openNmtui.sh"
+            :class "trayicon"
+            :tooltip "sus"
+    )
+  )
+)
+
+(defwidget rightSide []
+  (box 
+    :class "sidestuff" 
+    :orientation "h" 
+    :space-evenly false 
+    :halign "end"
+    (volume)
+    (time)
+    (wifi)
+  )
+)
+
+(defwidget leftSide []
+  (box  :class "sidestuff" 
+        :orientation "h" 
+        :space-evenly false 
+        :halign "start"
+    
+  )
+)
+
+(defpoll time :interval "1s" "date '+%r'")
+(defpoll volume :interval "0.1s" "scripts/getVol.sh")
+
+
